@@ -7,24 +7,20 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mans.payments</groupId>
+    <parent>
+        <groupId>com.mans.payments</groupId>
+        <artifactId>payment-platform</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
 
-    <artifactId>payment-platform</artifactId>
-
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>backend</artifactId>
 
     <packaging>pom</packaging>
-
-    <name>Payment Platform</name>
-
-    <description>
-        Enterprise Payment Orchestration Platform
-    </description>
-
     <modules>
 
-        <module>backend</module>
+        <module>common-core</module>
 
     </modules>
+    <name>Backend Parent</name>
 
 </project>
