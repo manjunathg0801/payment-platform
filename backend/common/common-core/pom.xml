@@ -11,7 +11,7 @@
         <groupId>com.mans.payments</groupId>
         <artifactId>backend</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>common-core</artifactId>
@@ -19,5 +19,35 @@
     <packaging>jar</packaging>
 
     <name>Common Core</name>
+
+    <dependencies>
+
+        <dependency>
+
+            <groupId>org.junit.jupiter</groupId>
+
+            <artifactId>junit-jupiter</artifactId>
+
+            <scope>test</scope>
+
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+
+                <groupId>org.apache.maven.plugins</groupId>
+
+                <artifactId>maven-surefire-plugin</artifactId>
+
+            </plugin>
+
+        </plugins>
+
+    </build>
 
 </project>
