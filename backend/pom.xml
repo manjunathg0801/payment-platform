@@ -123,6 +123,10 @@
 
         <module>platform/config-server</module>
 
+        <module>platform/discovery-server</module>
+
+        <module>platform/api-gateway</module>
+
     </modules>
 
 </project>
