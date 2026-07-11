@@ -9,6 +9,9 @@ import com.mans.payments.service.payment.service.PaymentService;
 import org.springframework.stereotype.Service;
 import com.mans.payments.service.payment.mapper.PaymentMapper;
 
+import org.springframework.transaction.annotation.Transactional;
+import com.mans.payments.service.payment.exception.PaymentNotFoundException;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -51,5 +54,18 @@ public class PaymentServiceImpl implements PaymentService {
                 .toString()
                 .replace("-", "")
                 .substring(0, 16);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PaymentResponse getPayment(String paymentId) {
+
+        Payment payment = paymentRepository
+                .findByPaymentId(paymentId)
+                .orElseThrow(() ->
+                        new PaymentNotFoundException(paymentId));
+
+        return paymentMapper.toResponse(payment);
+
     }
 }

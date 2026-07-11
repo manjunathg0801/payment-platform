@@ -3,21 +3,20 @@ package com.mans.payments.service.payment.controller;
 import com.mans.payments.service.payment.dto.CreatePaymentRequest;
 import com.mans.payments.service.payment.dto.PaymentResponse;
 import com.mans.payments.service.payment.service.PaymentService;
-import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/payments")
 @Tag(name = "Payment API", description = "Payment Management APIs")
 public class PaymentController {
 
-    private final PaymentService service;
+    private final PaymentService paymentService;
 
-    public PaymentController(PaymentService service) {
-        this.service = service;
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
     @PostMapping
@@ -25,6 +24,13 @@ public class PaymentController {
     public PaymentResponse createPayment(
             @Valid @RequestBody CreatePaymentRequest request) {
 
-        return service.createPayment(request);
+        return paymentService.createPayment(request);
+    }
+
+    @GetMapping("/{paymentId}")
+    @Operation(summary = "Get Payment By Payment Id")
+    public PaymentResponse getPayment(@PathVariable("paymentId") String paymentId) {
+
+        return paymentService.getPayment(paymentId);
     }
 }
