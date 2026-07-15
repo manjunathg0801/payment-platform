@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/payments")
@@ -32,5 +34,15 @@ public class PaymentController {
     public PaymentResponse getPayment(@PathVariable("paymentId") String paymentId) {
 
         return paymentService.getPayment(paymentId);
+    }
+
+
+
+    @GetMapping
+    @Operation(summary = "Get All Payments")
+    public Page<PaymentResponse> getPayments(Pageable pageable) {
+
+        return paymentService.getPayments(pageable);
+
     }
 }

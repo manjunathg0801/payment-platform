@@ -15,6 +15,9 @@ import com.mans.payments.service.payment.exception.PaymentNotFoundException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
@@ -65,7 +68,19 @@ public class PaymentServiceImpl implements PaymentService {
                 .orElseThrow(() ->
                         new PaymentNotFoundException(paymentId));
 
-        return paymentMapper.toResponse(payment);
+        PaymentResponse response = paymentMapper.toResponse(payment);
+        response.setMessage("Payment Retrieved Successfully");
+
+        return response;
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PaymentResponse> getPayments(Pageable pageable) {
+
+        return paymentRepository.findAll(pageable)
+                .map(paymentMapper::toResponse);
 
     }
 }
