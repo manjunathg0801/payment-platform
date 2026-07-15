@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.mans.payments.service.payment.enums.PaymentStatus;
 
 @RestController
 @RequestMapping("/payments")
@@ -44,5 +45,27 @@ public class PaymentController {
 
         return paymentService.getPayments(pageable);
 
+    }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search Payments")
+    public Page<PaymentResponse> searchPayments(
+
+            @RequestParam(name = "customerId", required = false)
+            String customerId,
+
+            @RequestParam(name = "paymentStatus", required = false)
+            PaymentStatus paymentStatus,
+
+            @RequestParam(name = "currency", required = false)
+            String currency,
+
+            Pageable pageable) {
+
+        return paymentService.searchPayments(
+                customerId,
+                paymentStatus,
+                currency,
+                pageable);
     }
 }

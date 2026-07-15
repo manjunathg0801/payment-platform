@@ -12,6 +12,9 @@ import com.mans.payments.service.payment.mapper.PaymentMapper;
 import org.springframework.transaction.annotation.Transactional;
 import com.mans.payments.service.payment.exception.PaymentNotFoundException;
 
+import com.mans.payments.service.payment.specification.PaymentSpecification;
+import org.springframework.data.jpa.domain.Specification;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -82,5 +85,22 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findAll(pageable)
                 .map(paymentMapper::toResponse);
 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PaymentResponse> searchPayments(
+            String customerId,
+            PaymentStatus paymentStatus,
+            String currency,
+            Pageable pageable) {
+
+        Specification<Payment> spec =
+                Specification.where(PaymentSpecification.hasCustomerId(customerId))
+                        .and(PaymentSpecification.hasStatus(paymentStatus))
+                        .and(PaymentSpecification.hasCurrency(currency));
+
+        return paymentRepository.findAll(spec, pageable)
+                .map(paymentMapper::toResponse);
     }
 }
