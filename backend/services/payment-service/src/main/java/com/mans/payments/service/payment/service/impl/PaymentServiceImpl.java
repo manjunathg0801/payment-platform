@@ -14,6 +14,7 @@ import com.mans.payments.service.payment.exception.PaymentNotFoundException;
 
 import com.mans.payments.service.payment.specification.PaymentSpecification;
 import org.springframework.data.jpa.domain.Specification;
+import com.mans.payments.service.payment.constants.ApplicationConstants;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -44,13 +45,13 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setCreatedDate(LocalDateTime.now());
         payment.setPaymentDate(LocalDateTime.now());
         payment.setRetryCount(0);
-        payment.setChannel("API");
-        payment.setCreatedBy("SYSTEM");
+        payment.setChannel(ApplicationConstants.API_CHANNEL);
+        payment.setCreatedBy(ApplicationConstants.SYSTEM_USER);
 
         Payment savedPayment = paymentRepository.save(payment);
 
         PaymentResponse response = paymentMapper.toResponse(savedPayment);
-        response.setMessage("Payment Created Successfully");
+        response.setMessage(ApplicationConstants.PAYMENT_CREATED);
 
         return response;
     }
@@ -72,7 +73,7 @@ public class PaymentServiceImpl implements PaymentService {
                         new PaymentNotFoundException(paymentId));
 
         PaymentResponse response = paymentMapper.toResponse(payment);
-        response.setMessage("Payment Retrieved Successfully");
+        response.setMessage(ApplicationConstants.PAYMENT_RETRIEVED);
 
         return response;
 
